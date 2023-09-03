@@ -17,7 +17,7 @@ import axios from "axios";
 export const getPosts = () => (dispatch) => {
   dispatch({ type: LOADING_DATA });
   axios
-    .get("/posts")
+    .get(`${process.env.REACT_APP_API_BASE_URL}/posts`)
     .then((res) => {
       dispatch({ type: SET_POSTS, payload: res.data });
     })
@@ -28,7 +28,7 @@ export const getPosts = () => (dispatch) => {
 
 export const likePost = (postId) => (dispatch) => {
   axios
-    .get(`/post/${postId}/like`, {
+    .get(`${process.env.REACT_APP_API_BASE_URL}/post/${postId}/like`, {
       headers: {
         Authorization: localStorage.getItem("IdToken"),
       },
@@ -43,7 +43,7 @@ export const likePost = (postId) => (dispatch) => {
 
 export const unlikePost = (postId) => (dispatch) => {
   axios
-    .get(`/post/${postId}/unlike`, {
+    .get(`${process.env.REACT_APP_API_BASE_URL}/post/${postId}/unlike`, {
       headers: {
         Authorization: localStorage.getItem("IdToken"),
       },
@@ -58,7 +58,7 @@ export const unlikePost = (postId) => (dispatch) => {
 
 export const deletePost = (postId) => (dispatch) => {
   axios
-    .delete(`/post/${postId}`, {
+    .delete(`${process.env.REACT_APP_API_BASE_URL}/post/${postId}`, {
       headers: {
         Authorization: localStorage.IdToken,
       },
@@ -72,7 +72,7 @@ export const deletePost = (postId) => (dispatch) => {
 export const addPost = (newPost) => (dispatch) => {
   dispatch({ type: LOADING_UI });
   axios
-    .post("/post", newPost, {
+    .post(`${process.env.REACT_APP_API_BASE_URL}/post`, newPost, {
       headers: {
         Authorization: localStorage.getItem("IdToken"),
         "Content-Type": "application/json",
@@ -94,7 +94,7 @@ export const getPost = (postId) => (dispatch) => {
   dispatch({ type: LOADING_UI });
   console.log(postId);
   axios
-    .get(`/post/${postId}`, {
+    .get(`${process.env.REACT_APP_API_BASE_URL}/post/${postId}`, {
       headers: {
         Authorization: localStorage.getItem("IdToken"),
       },
@@ -109,7 +109,7 @@ export const getPost = (postId) => (dispatch) => {
 
 export const addComment = (postId, body) => (dispatch) => {
   axios
-    .post(`/post/${postId}/comment`, body, {
+    .post(`${process.env.REACT_APP_API_BASE_URL}/post/${postId}/comment`, body, {
       headers: {
         Authorization: localStorage.getItem("IdToken"),
         "Content-Type": "application/json",

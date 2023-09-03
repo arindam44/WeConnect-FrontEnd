@@ -13,7 +13,7 @@ import axios from "axios";
 
 export const getAllUsers = () => (dispatch) => {
   axios
-    .get("/users", {
+    .get(`${process.env.REACT_APP_API_BASE_URL}/users`, {
       headers: {
         Authorization: localStorage.IdToken,
       },
@@ -26,7 +26,7 @@ export const getAllUsers = () => (dispatch) => {
 
 window.setInterval(() => {
   axios
-    .get("/threads", {
+    .get(`${process.env.REACT_APP_API_BASE_URL}/threads`, {
       headers: {
         Authorization: localStorage.IdToken,
       },
@@ -39,7 +39,7 @@ window.setInterval(() => {
 
 export const getThreads = () => (dispatch) => {
   axios
-    .get("/threads", {
+    .get(`${process.env.REACT_APP_API_BASE_URL}/threads`, {
       headers: {
         Authorization: localStorage.IdToken,
       },
@@ -63,7 +63,7 @@ export const sendMessage = (reciever, sender, body, time) => (dispatch) => {
 
 export const updateThreads = (formData) => (dispatch) => {
   axios
-    .post("/threads", formData, {
+    .post(`${process.env.REACT_APP_API_BASE_URL}/threads`, formData, {
       headers: {
         Authorization: localStorage.IdToken,
       },

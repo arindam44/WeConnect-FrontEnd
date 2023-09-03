@@ -15,7 +15,7 @@ import { socket } from "../../Util/Socket";
 export const loginUser = (userdata, history) => (dispatch) => {
   dispatch({ type: LOADING_UI });
   axios
-    .post("/signIn", userdata)
+    .post(`${process.env.REACT_APP_API_BASE_URL}/signIn`, userdata)
     .then((res) => {
       // setAuthorizationHeader(res.data.token);
       saveIdTokenInLocalStorage(res.data.token);
@@ -49,7 +49,7 @@ const saveIdTokenInLocalStorage = (token) => {
 };
 export const getUserData = (history) => (dispatch) => {
   dispatch({ type: LOADING_USER });
-  fetch("/user", {
+  fetch(`${process.env.REACT_APP_API_BASE_URL}/user`, {
     method: "GET",
     headers: {
       Authorization: localStorage.getItem("IdToken"),
@@ -74,7 +74,7 @@ export const getUserData = (history) => (dispatch) => {
 export const signupUser = (newUserdata, history) => (dispatch) => {
   dispatch({ type: LOADING_UI });
   axios
-    .post("/signUp", newUserdata)
+    .post(`${process.env.REACT_APP_API_BASE_URL}/signUp`, newUserdata)
     .then(async (res) => {
       //setAuthorizationHeader(res.data.token);
       saveIdTokenInLocalStorage(res.data.token);
@@ -102,7 +102,7 @@ export const logoutUser = (userHandle) => (dispatch) => {
 export const uploadProfileImage = (formdata) => (dispatch) => {
   dispatch({ type: LOADING_USER });
   axios
-    .post("/image", formdata, {
+    .post(`${process.env.REACT_APP_API_BASE_URL}/image`, formdata, {
       headers: {
         Authorization: localStorage.IdToken,
       },
@@ -122,7 +122,7 @@ export const uploadProfileImage = (formdata) => (dispatch) => {
 export const editUserDetails = (userDetails) => (dispatch) => {
   dispatch({ type: LOADING_USER });
   axios
-    .post("/user", userDetails, {
+    .post(`${process.env.REACT_APP_API_BASE_URL}/user`, userDetails, {
       headers: {
         Authorization: localStorage.getItem("IdToken"),
         "Content-Type": "application/json",
@@ -138,7 +138,7 @@ export const getUser = (userHandle) => (dispatch) => {
   console.log("from user page-------");
   dispatch({ type: LOADING_DATA });
   axios
-    .get(`/user/${userHandle}`, {
+    .get(`${process.env.REACT_APP_API_BASE_URL}/user/${userHandle}`, {
       headers: {
         Authorization: localStorage.IdToken,
       },
@@ -153,7 +153,7 @@ export const getUser = (userHandle) => (dispatch) => {
 
 export const markNotificationsRead = (notificationIds) => (dispatch) => {
   axios
-    .post(`/notifications/`, notificationIds, {
+    .post(`${process.env.REACT_APP_API_BASE_URL}/notifications/`, notificationIds, {
       headers: {
         Authorization: localStorage.IdToken,
       },

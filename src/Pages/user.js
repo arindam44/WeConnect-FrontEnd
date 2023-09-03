@@ -22,7 +22,7 @@ class user extends Component {
     if (postId) this.setState({ postIdParam: postId });
     this.props.getUser(userHandle);
     axios
-      .get(`/user/${userHandle}`, {
+      .get(`${process.env.REACT_APP_API_BASE_URL}/user/${userHandle}`, {
         headers: {
           Authorization: localStorage.IdToken,
         },
