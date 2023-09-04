@@ -31,7 +31,6 @@ class CommentForm extends Component {
     errors: {},
   };
   handleChange = (event) => {
-    console.log(event.target.value);
     this.setState({ [event.target.name]: event.target.value });
   };
   handleSend = (event) => {
@@ -49,7 +48,6 @@ class CommentForm extends Component {
   render() {
     const { classes } = this.props;
     const { errors, body } = this.state;
-    console.log(errors);
     return (
       <>
         <hr className={classes.myvisibleSeparator} />

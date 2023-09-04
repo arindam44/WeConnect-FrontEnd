@@ -8,11 +8,8 @@ import { createChat, getAllUsers } from "../../Redux/Actions/chatActions";
 import UserCard from "./UserCard";
 
 import withStyles from "@material-ui/styles/withStyles";
-import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import List from "@material-ui/core/List";
-
-import { grey } from "@material-ui/core/colors";
 
 const styles = (theme) => ({
   ...theme.spreadThis,
@@ -24,17 +21,16 @@ const styles = (theme) => ({
 });
 
 socket.on("online_users", (userList) => {
-  console.log(userList);
   store.dispatch({ type: SET_ONLINE_USERS, payload: userList });
 });
 
 const UsersPanel = (props) => {
   useEffect(() => {
     props.getAllUsers();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const { users, onlineUsers, currentUser, classes } = props;
+  const { users, onlineUsers, currentUser } = props;
 
-  console.log(users);
   return (
     <>
       <Typography
@@ -48,15 +44,11 @@ const UsersPanel = (props) => {
         Contacts
       </Typography>
       <List component="nav">
-        {onlineUsers.map((user) => {
-          if (user.userHandle !== currentUser.userHandle) {
-            return <UserCard user={user} online={true} />;
-          }
+        {onlineUsers.filter(user => user.userHandle !== currentUser.userHandle).map((user, index) => {
+            return <UserCard key={`online-user-${index}`} user={user} online={true} />;
         })}
-        {users.map((user) => {
-          if (user.userHandle !== currentUser.userHandle) {
-            return <UserCard user={user} />;
-          }
+        {users.filter(user => user.userHandle !== currentUser.userHandle).map((user, index) => {
+            return <UserCard key={`other-user-${index}`} user={user} />;
         })}
       </List>
     </>

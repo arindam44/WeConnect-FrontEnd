@@ -86,9 +86,7 @@ class PostDialog extends Component {
     this.setState({ open: false });
     this.props.clearErrors();
   };
-  componentWillReceiveProps(nextProps) {
-    console.log("NEW------", nextProps.post, nextProps.comments);
-  }
+
   render() {
     const {
       classes,

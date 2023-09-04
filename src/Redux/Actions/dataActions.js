@@ -34,11 +34,9 @@ export const likePost = (postId) => (dispatch) => {
       },
     })
     .then((res) => {
-      console.log("response from like---", res.data);
       dispatch({ type: LIKE_POST, payload: res.data });
-      console.log("like_post called---", res.data);
     })
-    .catch((err) => console.log(err));
+    .catch(() => {});
 };
 
 export const unlikePost = (postId) => (dispatch) => {
@@ -49,11 +47,9 @@ export const unlikePost = (postId) => (dispatch) => {
       },
     })
     .then((res) => {
-      console.log("response from unlike---", res.data);
       dispatch({ type: UNLIKE_POST, payload: res.data });
-      console.log("unlike_post called---", res.data);
     })
-    .catch((err) => console.log(err));
+    .catch(() => {});
 };
 
 export const deletePost = (postId) => (dispatch) => {
@@ -66,7 +62,7 @@ export const deletePost = (postId) => (dispatch) => {
     .then(() => {
       dispatch({ type: DELETE_POST, payload: postId });
     })
-    .catch((err) => console.log(err));
+    .catch(() => {});
 };
 
 export const addPost = (newPost) => (dispatch) => {
@@ -79,7 +75,6 @@ export const addPost = (newPost) => (dispatch) => {
       },
     })
     .then((res) => {
-      console.log("axios then");
       dispatch({ type: ADD_POST, payload: res.data });
       dispatch(clearErrors());
     })
@@ -92,7 +87,6 @@ export const clearErrors = () => (dispatch) => {
 
 export const getPost = (postId) => (dispatch) => {
   dispatch({ type: LOADING_UI });
-  console.log(postId);
   axios
     .get(`${process.env.REACT_APP_API_BASE_URL}/post/${postId}`, {
       headers: {
@@ -100,11 +94,10 @@ export const getPost = (postId) => (dispatch) => {
       },
     })
     .then((res) => {
-      console.log("POST-----", res.data);
       dispatch({ type: SET_POST, payload: res.data });
       dispatch({ type: STOP_LOADING_UI });
     })
-    .catch((err) => console.log(err));
+    .catch(() => {});
 };
 
 export const addComment = (postId, body) => (dispatch) => {
@@ -120,7 +113,6 @@ export const addComment = (postId, body) => (dispatch) => {
       dispatch(clearErrors());
     })
     .catch((err) => {
-      console.log(err);
       dispatch({ type: SET_ERRORS, payload: err.response.data });
     });
 };

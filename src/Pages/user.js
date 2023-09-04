@@ -28,13 +28,11 @@ class user extends Component {
         },
       })
       .then((res) => {
-        console.log(res.data);
         this.setState({
           profile: res.data.user,
         });
       })
       .catch((err) => {
-        console.log(err);
       });
   }
   render() {

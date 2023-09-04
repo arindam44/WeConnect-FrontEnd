@@ -9,7 +9,6 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
-import DialogTitle from "@material-ui/core/DialogTitle";
 import Typography from "@material-ui/core/Typography";
 import Picker from "emoji-picker-react";
 import { grey } from "@material-ui/core/colors";
@@ -22,7 +21,6 @@ import AddIcon from "@material-ui/icons/Add";
 import Emoji from "@material-ui/icons/InsertEmoticonSharp";
 import PhotoIcon from "@material-ui/icons/InsertPhoto";
 import DoneIcon from "@material-ui/icons/Done";
-import { FormHelperText } from "@material-ui/core";
 
 const styles = (theme) => ({
   ...theme.spreadThis,
@@ -103,16 +101,14 @@ class AddPost extends Component {
   };
   openPicker = () => {
     this.setState({ emojiOpen: !this.state.emojiOpen });
-    console.log("openpicker called--", this.state.emojiOpen);
   };
   handleEmojiClick = (event, emojiObject) => {
-    console.log(emojiObject.emoji);
     this.setState({ body: this.state.body + emojiObject.emoji });
   };
   handleImageChange = (event) => {
     event.preventDefault();
     const image = event.target.files[0];
-    var url = null;
+    let url = null;
     if (image) {
       url = URL.createObjectURL(image);
       this.setState({ imageUrl: url, showImageButton: false, image: image });
@@ -177,7 +173,7 @@ class AddPost extends Component {
                 multiline
                 fullWidth
                 autoFocus="true"
-                error={errors.body ? true : false}
+                error={!!errors.body}
                 helperText={errors.body}
                 className={classes.textField}
                 onChange={this.handleChange}
@@ -233,7 +229,7 @@ class AddPost extends Component {
                   </Tooltip>
                   <img
                     src={imageUrl}
-                    alt="image"
+                    alt=""
                     className={classes.imagePreview}
                   />
                 </div>

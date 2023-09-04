@@ -17,7 +17,6 @@ import chat from "./Pages/Chat";
 import Chats from "./Components/Chat/Chats";
 import ThreadList from "./Components/Chat/ThreadList";
 import UsersPanel from "./Components/Chat/UsersPanel";
-import AuthRoute from "./Util/AuthRoute";
 
 const token = localStorage.getItem("IdToken");
 if (token) {
@@ -27,7 +26,6 @@ if (token) {
     window.location.href = "/page/login";
   } else {
     store.dispatch({ type: SET_AUTHENTICATED });
-    //axios.defaults.headers.common["Authorization"] = token;
     store.dispatch(getUserData());
   }
 }

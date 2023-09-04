@@ -16,7 +16,7 @@ const initialState = {
   loading: false,
 };
 
-export default function (state = initialState, action) {
+const dataReducer = function (state = initialState, action) {
   switch (action.type) {
     case LOADING_DATA:
       return {
@@ -82,3 +82,5 @@ export default function (state = initialState, action) {
       };
   }
 }
+
+export default dataReducer;

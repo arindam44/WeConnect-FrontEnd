@@ -25,7 +25,6 @@ export class home extends Component {
     if (window.screen.availWidth < 400) this.setState({ show: false });
   }
   openNewPostDialog = () => {
-    console.log("open dialog");
     this.setState({ openDialog: true });
   };
   render() {

@@ -1,5 +1,4 @@
 import {
-  SET_ONLINE_USERS,
   SET_THREADS,
   SET_CHAT,
   SEND_MESSEGE,
@@ -21,7 +20,7 @@ export const getAllUsers = () => (dispatch) => {
     .then((res) => {
       dispatch({ type: SET_USERS, payload: res.data });
     })
-    .catch((err) => console.log(err));
+    .catch(() => {});
 };
 
 window.setInterval(() => {
@@ -34,7 +33,7 @@ window.setInterval(() => {
     .then((res) => {
       store.dispatch({ type: SET_THREADS, payload: res.data });
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {});
 }, 5000);
 
 export const getThreads = () => (dispatch) => {
@@ -45,10 +44,9 @@ export const getThreads = () => (dispatch) => {
       },
     })
     .then((res) => {
-      console.log(res);
       dispatch({ type: SET_THREADS, payload: res.data });
     })
-    .catch((err) => console.log(err));
+    .catch(() => {});
 };
 
 export const sendMessage = (reciever, sender, body, time) => (dispatch) => {
@@ -71,7 +69,7 @@ export const updateThreads = (formData) => (dispatch) => {
     .then((res) => {
       dispatch({ type: UPDATE_THREADS, payload: res.data });
     })
-    .catch((err) => console.log(err));
+    .catch(() => {});
 };
 
 export const createChat = (user, imageUrl) => (dispatch) => {

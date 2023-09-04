@@ -17,13 +17,9 @@ export const loginUser = (userdata, history) => (dispatch) => {
   axios
     .post(`${process.env.REACT_APP_API_BASE_URL}/signIn`, userdata)
     .then((res) => {
-      // setAuthorizationHeader(res.data.token);
       saveIdTokenInLocalStorage(res.data.token);
       dispatch(getUserData(history));
       dispatch({ type: CLEAR_ERRORS });
-      /* setTimeout(() => {
-        history.push("/");
-      }, 3000);*/
     })
     .catch((err) => {
       dispatch({
@@ -32,16 +28,6 @@ export const loginUser = (userdata, history) => (dispatch) => {
       });
     });
 };
-/*
-const setAuthorizationHeader = (token) => {
-  const IdToken = `Bearer ${token}`;
-  localStorage.setItem("IdToken", IdToken);
- // axios.defaults.headers.common["Authorization"] = IdToken;
-
- 
-};
-
-*/
 
 const saveIdTokenInLocalStorage = (token) => {
   const IdToken = `Bearer ${token}`;
@@ -68,7 +54,7 @@ export const getUserData = (history) => (dispatch) => {
       });
       history.push("/");
     })
-    .catch((err) => console.log(err));
+    .catch(() => {});
 };
 
 export const signupUser = (newUserdata, history) => (dispatch) => {
@@ -114,8 +100,7 @@ export const uploadProfileImage = (formdata) => (dispatch) => {
     .then((res) => {
       dispatch({ type: SET_POSTS, payload: res.data });
     })
-    .catch((err) => {
-      console.log(err);
+    .catch(() => {
     });
 };
 
@@ -131,11 +116,10 @@ export const editUserDetails = (userDetails) => (dispatch) => {
     .then(() => {
       dispatch(getUserData());
     })
-    .catch((err) => console.log(err));
+    .catch(() => {});
 };
 
 export const getUser = (userHandle) => (dispatch) => {
-  console.log("from user page-------");
   dispatch({ type: LOADING_DATA });
   axios
     .get(`${process.env.REACT_APP_API_BASE_URL}/user/${userHandle}`, {
@@ -161,5 +145,5 @@ export const markNotificationsRead = (notificationIds) => (dispatch) => {
     .then((res) => {
       dispatch({ type: MARK_NOTIFICATIONS_READ });
     })
-    .catch((err) => console.log(err));
+    .catch(() => {});
 };

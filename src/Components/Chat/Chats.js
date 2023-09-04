@@ -65,7 +65,6 @@ class Chats extends Component {
     formData.append("body", body);
     formData.append("time", time);
     formData.append("recieverImageUrl", this.props.thread.imageUrls[0].url);
-    console.log(formData);
 
     this.props.updateThreads(formData);
     this.props.sendMessage(reciever, sender, body, time);
