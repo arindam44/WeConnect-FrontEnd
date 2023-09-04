@@ -134,6 +134,7 @@ class AddPost extends Component {
       });
     }
   }
+  
   render() {
     const { errors, showImageButton, imageUrl } = this.state;
     const {

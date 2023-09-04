@@ -18,6 +18,7 @@ export const SUBMIT_COMMENT = "SUBMIT_COMMENT";
 export const DELETE_POST = "DELETE_POST";
 export const ADD_POST = "ADD_POST";
 
+export const SET_SOCKET = "SET_SOCKET";
 export const SET_USERS = "SET_USERS";
 export const SET_ONLINE_USERS = "SET_ONLINE_USERS";
 export const SET_THREADS = "SET_THREADS";

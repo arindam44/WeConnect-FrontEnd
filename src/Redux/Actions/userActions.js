@@ -8,9 +8,9 @@ import {
   SET_UNAUTHENTICATED,
   SET_POSTS,
   MARK_NOTIFICATIONS_READ,
+  SET_SOCKET,
 } from "../Types";
 import axios from "axios";
-import { socket } from "../../Util/Socket";
 
 export const loginUser = (userdata, history) => (dispatch) => {
   dispatch({ type: LOADING_UI });
@@ -20,6 +20,7 @@ export const loginUser = (userdata, history) => (dispatch) => {
       saveIdTokenInLocalStorage(res.data.token);
       dispatch(getUserData(history));
       dispatch({ type: CLEAR_ERRORS });
+      // window.location.href = "/";
     })
     .catch((err) => {
       dispatch({
@@ -32,8 +33,9 @@ export const loginUser = (userdata, history) => (dispatch) => {
 const saveIdTokenInLocalStorage = (token) => {
   const IdToken = `Bearer ${token}`;
   localStorage.setItem("IdToken", IdToken);
+  console.log("idtoken", IdToken);
 };
-export const getUserData = (history) => (dispatch) => {
+export const getUserData = (socket) => (dispatch) => {
   dispatch({ type: LOADING_USER });
   fetch(`${process.env.REACT_APP_API_BASE_URL}/user`, {
     method: "GET",
@@ -47,12 +49,12 @@ export const getUserData = (history) => (dispatch) => {
         type: SET_USER,
         payload: user,
       });
-      socket.emit("join", {
+      socket?.emit("join", {
         id: user.credentials._id,
         userHandle: user.credentials.userHandle,
         imageUrl: user.credentials.imageUrl,
       });
-      history.push("/");
+      window.history.push("/");
     })
     .catch(() => {});
 };
@@ -77,12 +79,11 @@ export const signupUser = (newUserdata, history) => (dispatch) => {
     });
 };
 
-export const logoutUser = (userHandle) => (dispatch) => {
+export const logoutUser = (userHandle, socket) => (dispatch) => {
   localStorage.removeItem("IdToken");
-  // delete axios.defaults.headers.common["Authorization"];
   dispatch({ type: SET_UNAUTHENTICATED });
-  socket.emit("logout", userHandle);
-
+  socket?.emit("logout", userHandle);
+  dispatch({ type: SET_SOCKET, payload: null });
 };
 
 export const uploadProfileImage = (formdata) => (dispatch) => {
@@ -100,8 +101,7 @@ export const uploadProfileImage = (formdata) => (dispatch) => {
     .then((res) => {
       dispatch({ type: SET_POSTS, payload: res.data });
     })
-    .catch(() => {
-    });
+    .catch(() => {});
 };
 
 export const editUserDetails = (userDetails) => (dispatch) => {
@@ -137,11 +137,15 @@ export const getUser = (userHandle) => (dispatch) => {
 
 export const markNotificationsRead = (notificationIds) => (dispatch) => {
   axios
-    .post(`${process.env.REACT_APP_API_BASE_URL}/notifications/`, notificationIds, {
-      headers: {
-        Authorization: localStorage.IdToken,
-      },
-    })
+    .post(
+      `${process.env.REACT_APP_API_BASE_URL}/notifications/`,
+      notificationIds,
+      {
+        headers: {
+          Authorization: localStorage.IdToken,
+        },
+      }
+    )
     .then((res) => {
       dispatch({ type: MARK_NOTIFICATIONS_READ });
     })

@@ -1,9 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import store from "../../Redux/Store";
-import { socket } from "../../Util/Socket";
-import { SET_ONLINE_USERS } from "../../Redux/Types";
 import { createChat, getAllUsers } from "../../Redux/Actions/chatActions";
 import UserCard from "./UserCard";
 
@@ -20,14 +17,10 @@ const styles = (theme) => ({
   },
 });
 
-socket.on("online_users", (userList) => {
-  store.dispatch({ type: SET_ONLINE_USERS, payload: userList });
-});
-
 const UsersPanel = (props) => {
   useEffect(() => {
     props.getAllUsers();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const { users, onlineUsers, currentUser } = props;
 
@@ -44,12 +37,22 @@ const UsersPanel = (props) => {
         Contacts
       </Typography>
       <List component="nav">
-        {onlineUsers.filter(user => user.userHandle !== currentUser.userHandle).map((user, index) => {
-            return <UserCard key={`online-user-${index}`} user={user} online={true} />;
-        })}
-        {users.filter(user => user.userHandle !== currentUser.userHandle).map((user, index) => {
+        {onlineUsers
+          .filter((user) => user.userHandle !== currentUser.userHandle)
+          .map((user, index) => {
+            return (
+              <UserCard
+                key={`online-user-${index}`}
+                user={user}
+                online={true}
+              />
+            );
+          })}
+        {users
+          .filter((user) => user.userHandle !== currentUser.userHandle)
+          .map((user, index) => {
             return <UserCard key={`other-user-${index}`} user={user} />;
-        })}
+          })}
       </List>
     </>
   );

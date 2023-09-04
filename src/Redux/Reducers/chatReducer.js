@@ -1,4 +1,5 @@
 import {
+  SET_SOCKET,
   SET_USERS,
   SET_ONLINE_USERS,
   SET_THREADS,
@@ -9,6 +10,7 @@ import {
 } from "../Types";
 
 const initialState = {
+  socket: null,
   users: [],
   onlineUsers: [],
   threads: [],
@@ -18,6 +20,11 @@ const initialState = {
 
 const chatReducer = function (state = initialState, action) {
   switch (action.type) {
+    case SET_SOCKET:
+      return {
+        ...state,
+        socket: action.payload,
+      };
     case SET_USERS:
       return {
         ...state,
@@ -76,6 +83,6 @@ const chatReducer = function (state = initialState, action) {
     default:
       return { ...state };
   }
-}
+};
 
 export default chatReducer;

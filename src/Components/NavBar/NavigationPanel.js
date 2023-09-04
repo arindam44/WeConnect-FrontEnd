@@ -17,7 +17,7 @@ import LogoutIcon from "@material-ui/icons/PowerSettingsNew";
 
 function NavigationPanel(props) {
   const history = useHistory();
-  const { user } = props;
+  const { socket, user } = props;
   return (
     <div>
       <List>
@@ -50,7 +50,7 @@ function NavigationPanel(props) {
 
         <ListItem
           onClick={() => {
-            props.logoutUser(user.userHandle);
+            props.logoutUser(user.userHandle, socket);
             history.push("/login");
           }}
         >
@@ -67,6 +67,7 @@ function NavigationPanel(props) {
 }
 
 const mapStateToProps = (state) => ({
+  socket: state.chat.socket,
   user: state.user.credentials,
 });
 

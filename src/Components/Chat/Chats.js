@@ -4,10 +4,6 @@ import PropTypes from "prop-types";
 import dayjs from "dayjs";
 import image from "../../Images/logo.png";
 import { sendMessage, updateThreads } from "../../Redux/Actions/chatActions";
-import { socket } from "../../Util/Socket";
-import store from "../../Redux/Store";
-import { NEW_MESSEGE } from "../../Redux/Types";
-
 import withStyles from "@material-ui/styles/withStyles";
 import { Paper } from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
@@ -42,10 +38,6 @@ const styles = (theme) => ({
   },
 });
 
-socket.on("new_messege", (data) => {
-  store.dispatch({ type: NEW_MESSEGE, payload: data });
-});
-
 class Chats extends Component {
   state = {
     body: "",
@@ -58,6 +50,7 @@ class Chats extends Component {
     const formData = new FormData();
     const reciever = this.props.thread.users[0];
     const sender = this.props.user.userHandle;
+    const socket = this.props.socket;
     const body = this.state.body;
     const time = new Date();
     formData.append("reciever", reciever);
@@ -67,7 +60,7 @@ class Chats extends Component {
     formData.append("recieverImageUrl", this.props.thread.imageUrls[0].url);
 
     this.props.updateThreads(formData);
-    this.props.sendMessage(reciever, sender, body, time);
+    this.props.sendMessage(socket, reciever, sender, body, time);
 
     this.setState({ body: "" });
   };
@@ -166,6 +159,7 @@ Chats.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 const mapStateToProps = (state) => ({
+  socket: state.chat.socket,
   thread: state.chat.thread,
   chat: state.chat.chat,
   user: state.user.credentials,
