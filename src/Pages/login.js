@@ -1,9 +1,9 @@
-import React, { Component, useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { loginUser } from "../Redux/Actions/userActions";
 import propTypes from "prop-types";
 import logo from "../Images/logo.png";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import withStyles from "@material-ui/core/styles/withStyles";
 import TextField from "@material-ui/core/TextField";
@@ -17,7 +17,6 @@ import IconButton from "@material-ui/core/IconButton";
 //ICONS
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
-import { useHistory } from "react-router-dom";
 
 const styles = (theme) => ({
   ...theme.spreadThis,
@@ -34,29 +33,6 @@ const Login = function (props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [visibility, setVisibility] = useState("");
-  // constructor() {
-  //   super();
-  //   this.state = {
-  //     email: "",
-  //     password: "",
-  //     errors: {},
-  //     visibility: false,
-  //   };
-  // }
-
-  // componentWillMount() {
-  //   console.log("this.props.user", this.props.user);
-  //   if (this.props.user.authenticated === true) {
-  //     this.props.history.push("/");
-  //   }
-  // }
-  // componentWillReceiveProps(nextProps) {
-  //   if (nextProps.UI.errors) {
-  //     this.setState({
-  //       errors: nextProps.UI.errors,
-  //     });
-  //   }
-  // }
 
   useEffect(() => {
     console.log("user", user);
@@ -132,9 +108,9 @@ const Login = function (props) {
             }}
           />
           <br />
-          {errors.general && (
+          {errors?.general && (
             <Typography variant="body2" className={classes.customError}>
-              {errors.general}
+              {errors?.general}
             </Typography>
           )}
           <Button
